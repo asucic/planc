@@ -4,9 +4,81 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <body class="main">
+        <nav class="navbar is-info" role="navigation" aria-label="main navigation">
+            <div class="navbar-menu">
+                <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+
+                    <a class="navbar-item" href="{{ path('home') }}">
+                        Home
+                    </a>
+                    {% if app.request.cookies.get('logged_in') == true %}
+                        <a class="navbar-item" href="{{ path('plan') }}">
+                            Plans
+                        </a>
+                    {% else %}
+                        <a class="navbar-item" href="{{ path('contact') }}">
+                            Contact us
+                        </a>
+                        <a class="navbar-item" href="{{ path('about') }}">
+                            About
+                        </a>
+                    {% endif %}
+
+                </div>
+
+                {% if app.request.cookies.get('logged_in') == true %}
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            Welcome, Mladen
+                        </div>
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a class="button is-light" href="{{ path('logout') }}">
+                                    Log out
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="navbar-end">
+                        <div class="navbar-item">
+                            <div class="buttons">
+                                <a class="button is-primary" href="{{ path('login') }}">
+                                    Log in
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+
+        <div class="section">
+            {% block body %}{% endblock %}
+            {% block javascripts %}{% endblock %}
+        </div>
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    <small>&copy; Copyright 2020, Plan C</small>
+                </p>
+            </div>
+        </footer>
     </body>
 </html>
+
+<style>
+    .main {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+    }
+
+    .section {
+        flex: 1;
+    }
+</style>

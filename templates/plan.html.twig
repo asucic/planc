@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    <div class="container columns">
+        <nav class="panel column is-4">
+            <p class="panel-heading">
+                Files
+            </p>
+            <div class="panel-block">
+                <p class="control has-icons-left">
+                <input class="input" type="text" placeholder="Search">
+                <span class="icon is-left">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </span>
+                </p>
+            </div>
+            <a class="panel-block is-active" onclick="openPdf(this)">
+                <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <img class="image is-24x24" src="{{ asset('image/pdffile.png') }}">
+                <p name="pdf_name">KAE-KO-GR-U1-4340M-002-H5-b.pdf</p>
+            </a>
+            <a class="panel-block is-active" onclick="openPdf(this)">
+                <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <img class="image is-24x24" src="{{ asset('image/pdffile.png') }}">
+                <p name="pdf_name">KAE-KO-GR-U2-4340M-001-H5-a.pdf</p>
+            </a>
+            <a class="panel-block is-active" onclick="openPdf(this)">
+                <span class="panel-icon">
+                    <i class="fas fa-book" aria-hidden="true"></i>
+                </span>
+                <img class="image is-24x24" src="{{ asset('image/pdffile.png') }}">
+                <p name="pdf_name">KAE-KO-GR-U2-4340M-002-H5-a.pdf</p>
+            </a>
+        </nav>
+
+        <div class="column is-8" style="text-align: center">
+            <embed id="pdf_screen" style="width:800px; height:500px;"/>
+        </div>
+
+        <script>
+            function openPdf(element) {
+                let screen = document.querySelector('embed#pdf_screen');
+                let target = element.querySelector('p[name="pdf_name"]').innerHTML;
+                let clone = screen.cloneNode(true);
+                clone.setAttribute('src', `files/${target}`);
+                screen.parentNode.replaceChild(clone, screen);
+            }
+        </script>
+    </div>
+{% endblock %}
